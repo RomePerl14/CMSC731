@@ -137,7 +137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &262078017
 Transform:
   m_ObjectHideFlags: 0
@@ -199,7 +199,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f394ed88ed737a6438626a7971a3ef3f, type: 2}
+  - {fileID: 2100000, guid: e3bfd21fd8ce6434d8b9ff043daa8107, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -248,7 +248,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &264027505
 Transform:
   m_ObjectHideFlags: 0
@@ -258,7 +258,7 @@ Transform:
   m_GameObject: {fileID: 264027504}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.1176, z: 0}
+  m_LocalPosition: {x: 0, y: -1.0735, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -496,7 +496,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &596473791
 Transform:
   m_ObjectHideFlags: 0
@@ -540,7 +540,7 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_InputActionReference: {fileID: 1010738217276881514, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+    m_InputActionReference: {fileID: -6493913391331992944, guid: c348712bda248c246b8c49b3db54643f, type: 3}
     m_ObjectReferenceObject: {fileID: 0}
     m_ManualValue: {x: 0, y: 0}
   m_RightHandTurnInput:
@@ -573,7 +573,7 @@ MonoBehaviour:
   m_TransformationPriority: 0
   m_MoveSpeed: 1
   m_InAirControlModifier: 0.5
-  m_EnableStrafe: 0
+  m_EnableStrafe: 1
   m_EnableFly: 0
   m_ForwardSource: {fileID: 0}
   m_LeftHandMoveInput:
@@ -1305,6 +1305,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AstronautHandRight
       objectReference: {fileID: 0}
+    - target: {fileID: 2574023741773357204, guid: 40c5b692b36d52848a7e80fceedaa071, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2950724549204965934, guid: 40c5b692b36d52848a7e80fceedaa071, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2002,7 +2006,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1929136554
 Transform:
   m_ObjectHideFlags: 0
@@ -2235,6 +2239,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AstronautHandLeft
       objectReference: {fileID: 0}
+    - target: {fileID: 2574023741773357204, guid: 8d177dbb484955f4c91ef1f5e57d9293, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2950724549204965934, guid: 8d177dbb484955f4c91ef1f5e57d9293, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2302,7 +2310,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2093655241
 Transform:
   m_ObjectHideFlags: 0
@@ -2312,7 +2320,7 @@ Transform:
   m_GameObject: {fileID: 2093655240}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.1176, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

@@ -6,6 +6,7 @@ public class SelectableObject : MonoBehaviour
     public Material unhighlighted;
     Renderer Mat;
     bool highlighting = false;
+    int count = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -17,16 +18,29 @@ public class SelectableObject : MonoBehaviour
     {
         highlighting = true;
         Mat.material = highlighted;
+        count = 0;
+    }
+    public void UnHighlight()
+    {
+        highlighting = false;
+        Mat.material = unhighlighted;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(highlighting == true)
+        if(highlighting == true && count == 10)
         {
-            highlighting = false;
-            Mat.material = unhighlighted;
+            UnHighlight();
+            count = 0;
+        }
+        else
+        {
+            count += 1;
+        }
 
+        if(count > 10)
+        {
+            count = 10;
         }
     }
 }
