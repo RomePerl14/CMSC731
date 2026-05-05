@@ -1,0 +1,83 @@
+<?xml version="1.0" ?>
+<robot name="pjm_pole">
+
+
+  <link name="pjm">
+  <!-- IEEM -->
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://meshes/IEEM.obj" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://meshes/IEEM.obj" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+
+  <!-- Gripper Base -->
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0.03"/>
+      <geometry>
+        <mesh filename="package://meshes/gripper_base.obj" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0.03"/>
+      <geometry>
+        <mesh filename="package://meshes/gripper_base.obj" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+
+  </link>
+
+  <!-- Left mandible -->
+  <link name="lm">
+    <visual>
+      <origin rpy="-1.57079632679 0 0" xyz="-0.0175 0.075 0"/>
+      <geometry>
+        <mesh filename="package://meshes/pole_claw.obj" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="-1.57079632679 0 0" xyz="-0.0175 0.075 0"/>
+      <geometry>
+        <mesh filename="package://meshes/pole_claw.obj" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="lm" type="prismatic">
+    <parent link="pjm"/>
+    <child link="lm"/>
+    <origin xyz="0 0 0" rpy= "1.57079632679 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="1000" velocity="1000" lower="-0.03" upper="0" />
+  </joint>
+
+  <!-- Right mandible -->
+  <link name="rm">
+    <visual>
+      <origin rpy="-1.57079632679 3.14159265359 0" xyz="0.0175 0.075 0"/>
+      <geometry>
+        <mesh filename="package://meshes/pole_claw.obj" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="-1.57079632679 3.14159265359 0" xyz="0.0175 0.075 0"/>
+      <geometry>
+        <mesh filename="package://meshes/pole_claw.obj" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="rm" type="prismatic">
+    <parent link="pjm"/>
+    <child link="rm"/>
+    <origin xyz="0 0 0" rpy= "1.57079632679 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="1000" velocity="1000" lower="0" upper="0.03" />
+  </joint>
+
+</robot>
+

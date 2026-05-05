@@ -1,0 +1,81 @@
+<?xml version="1.0" ?>
+<robot name="nobu">
+
+    <!-- base_link -->
+    <link name="base_and_motor">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://meshes/NOBU_baselink_obj.obj" scale="0.001 0.001 0.001" />
+            </geometry>
+        </visual>
+        <!-- <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://meshes/NOBU_baselink_obj.obj" scale="0.001 0.001 0.001" />
+            </geometry>
+        </collision> -->
+
+        <visual>
+            <origin xyz="0 0 .0645" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://meshes/RMD-X6-36_obj.obj" scale="0.0001 0.0001 0.0001" />
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- Joint 1 -->
+    <!-- 0.0445253 -->
+    <link name="joint1">
+        <visual>
+            <origin xyz="0 0 0.045" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://meshes/NOBU_joint1_update_obj.obj" scale="0.001 0.001 0.001" />
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0.0445253" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://meshes/NOBU_joint1_update_obj.obj" scale="0.001 0.001 0.001" />
+            </geometry>
+        </collision>
+        
+        <visual>
+            <origin xyz=".0325 0 .144" rpy="0 1.57079632679 0"/>
+            <geometry>
+                <mesh filename="package://meshes/RMD-X6-36_obj.obj" scale="0.0001 0.0001 0.0001"/>
+            </geometry>
+        </visual>
+    </link>
+    <joint name="joint1" type="revolute">
+        <parent link="base_and_motor"/>
+        <child link="joint1" />
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <axis xyz="0 0 1"/>
+        <limit effort="100" velocity="100" lower="-6" upper="6"/>
+    </joint>
+
+    <!-- Joint 2 -->
+    <link name="manip">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://meshes/NOBU_joint1_2_obj.obj" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://meshes/NOBU_joint1_2_obj.obj" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+    </link>
+    <joint name="manip" type="revolute">
+        <parent link="joint1"/>
+        <child link="manip"/>
+        <origin xyz="0.1065 0 0.145" rpy="0 0 -1.57079632679"/>
+        <axis xyz="0 1 0"/>
+        <limit effort="100" velocity="100" lower="-6" upper="6"/>
+    </joint>
+
+</robot>

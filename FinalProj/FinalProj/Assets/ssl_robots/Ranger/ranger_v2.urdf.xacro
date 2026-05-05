@@ -1,0 +1,291 @@
+<?xml version='1.0'?>
+<robot name="ranger" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<!-- 
+  ITEM OF NOTE:
+  Currently the values used to transform link1 and link2 so that there are no colliding bodies are "wrong" I got them to be as accurate as I could using
+  CAD mesaurements, but I was using STL models (because at the time I didn't have access to my SVN repo, where the .prt file would be), that's the 
+  level of accuracy this URDF is working with.
+
+  FUTURE IDEAS:
+  Depending on the strucutre of ROS2, its possible to write a script that searches for the link lengths and origins for each joint, and use that to create
+  a DH parameter table. Or if theres an easier way, do that. I think adjustable link lengths are going to be a pain from a controls standpoint, but unless
+  we are adjusting the links every single time I think we'll be good. PLUS the link adjustments are fixed adjustments, so we'll know ahead of time
+ -->
+
+  <!-- <xacro:args name="link1_length" default="0.32558064"/> -->
+  <!-- <xacro:args name="link2_length" default="0.38964284"/> -->
+  <xacro:property name="link1_length" value="0.2"/>
+  <xacro:property name="link2_length" value="0.3"/>
+
+<!-- link1 -->
+  <xacro:macro name="link1" params="link_length">
+    <xacro:if value="${0 >= link_length}">
+      <xacro:property name="length" value="0"/>
+      <origin xyz="0 0 ${-0.1016-length/2}" rpy="3.141592653589793 0 0" />
+    </xacro:if>
+    <xacro:if value="${link_length > 0}">
+      <xacro:property name="length" value="${link_length}"/>
+      <origin xyz="0 0 ${-0.1016-length/2}" rpy="3.141592653589793 0 0" />
+      <geometry>
+        <cylinder length="${length}" radius="0.068625"/>
+      </geometry>
+    </xacro:if>
+  </xacro:macro>
+
+  <xacro:macro name="link1_transform" params="link_length">
+    <xacro:if value="${0 >= link_length}">
+        <xacro:property name="length" value="0"/>
+        <!-- This number is an approximation, gotta get more accurate dimensions -romeo -->
+        <origin xyz="0 ${0.369062+length} 0" rpy="-1.57079633 0 0"/>
+      </xacro:if>
+      <xacro:if value="${link_length > 0}">
+        <xacro:property name="length" value="${link_length}"/>
+        <origin xyz="0 ${0.369062+length} 0" rpy="-1.57079633 0 0"/>
+      </xacro:if>
+  </xacro:macro>
+
+<!-- link2 -->
+  <xacro:macro name="link2" params="link_length">
+    <xacro:if value="${0 >= link_length}">
+      <xacro:property name="length" value="0"/>
+      <origin xyz="0 0 ${-0.1762125-length/2}" rpy="3.141592653589793 0 0" />
+    </xacro:if>
+    <xacro:if value="${link_length > 0}">
+      <xacro:property name="length" value="${link_length}"/>
+      <origin xyz="0 0 ${-0.1762125-length/2}" rpy="3.141592653589793 0 0" />
+      <geometry>
+        <cylinder length="${length}" radius="0.068625"/>
+      </geometry>
+    </xacro:if>
+  </xacro:macro>
+
+  <xacro:macro name="link2_transform" params="link_length">
+    <xacro:if value="${0 >= link_length}">
+        <xacro:property name="length" value="0"/>
+        <!-- This number is an approximation. gotta get more accurate dimensions -romeo -->
+        <origin xyz="0.1524 ${-0.2682875-length} 0" rpy="1.57079633 0 0"/>
+      </xacro:if>
+      <xacro:if value="${link_length > 0}">
+        <xacro:property name="length" value="${link_length}"/>
+        <origin xyz="0.1524 ${-0.2682875-length} 0" rpy="1.57079633 0 0"/>
+      </xacro:if>
+  </xacro:macro>
+
+<!--  -->
+<!--  -->
+
+<!-- Now define the robot -->
+  <!-- Shoulder/Base  -->
+  <link name="base_link">
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://meshes/Shoulder.obj" scale="0.0254 0.0254 0.0254"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://meshes/Shoulder.obj" scale="0.0254 0.0254 0.0254"/>
+      </geometry>
+    </collision>
+
+  </link> 
+
+
+  <!-- Shoulder-Arm -->
+  <link name="shoulder">
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://meshes/Shoulder_jt.obj" scale="0.0254 0.0254 0.0254"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://meshes/Shoulder_jt.obj" scale="0.0254 0.0254 0.0254"/>
+      </geometry> 
+    </collision>
+
+  </link>
+  <!-- shoulder_joint -->
+  <joint name="joint1" type="continuous">
+    <parent link="base_link"/>
+    <child link="shoulder"/>
+    <origin xyz="0 0 0.1524" rpy="0 0 0"/>
+    <axis xyz="0 0 1" />
+  </joint>
+
+
+  <!-- Upper Arm -->
+  <link name="u_arm">
+
+    <visual>
+      <origin xyz="0 0 0" rpy="3.141592653589793 0 0" />
+      <geometry>
+        <mesh filename="package://meshes/U_arm.obj" scale="0.0254 0.0254 0.0254"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="3.141592653589793 0 0" />
+      <geometry>
+        <mesh filename="package://meshes/U_arm.obj" scale="0.0254 0.0254 0.0254"/>
+      </geometry> 
+    </collision>
+
+  </link>
+  <!-- u_arm_jt -->
+  <joint name="joint2" type="continuous">
+    <parent link="shoulder"/>
+    <child link="u_arm"/>
+    <origin xyz="0 0 0" rpy="1.57079633 0 0"/>
+    <axis xyz="0 0 1" />
+  </joint>
+
+
+  <!-- Upper Arm - Elbow -->
+  <link name="elbow1">
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://meshes/Elbow1_jt.obj" scale="0.0254 0.0254 0.0254"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://meshes/Elbow1_jt.obj" scale="0.0254 0.0254 0.0254"/>
+      </geometry> 
+    </collision>
+    <visual>
+      <xacro:link1 link_length="${link1_length}"/>
+    </visual>
+    <collision>
+      <xacro:link1 link_length="${link1_length}"/>
+    </collision>
+
+  </link>
+  <!-- elbow1_jt -->
+  <joint name="joint3" type="continuous">
+    <parent link="u_arm"/>
+    <child link="elbow1"/>
+    <xacro:link1_transform link_length="${link1_length}"/>
+    <axis xyz="0 0 1" />
+  </joint>
+
+
+  <!-- Mid-Elbow -->
+  <link name="elbow2">
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://meshes/Elbow2_jt.obj" scale="0.0254 0.0254 0.0254"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://meshes/Elbow2_jt.obj" scale="0.0254 0.0254 0.0254"/>
+      </geometry> 
+    </collision>
+
+  </link>
+  <!-- elbow2_jt -->
+  <joint name="joint4" type="continuous">
+    <parent link="elbow1"/>
+    <child link="elbow2"/>
+    <origin xyz="0 0 0" rpy="-1.57079633 0 0"/>
+    <axis xyz="0 0 1" />
+  </joint>
+
+
+  <!-- Wrist -->
+  <link name="wrist">
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://meshes/Wrist_jt.obj" scale="0.0254 0.0254 0.0254"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://meshes/Wrist_jt.obj" scale="0.0254 0.0254 0.0254"/>
+      </geometry> 
+    </collision>
+
+    <visual>
+      <xacro:link2 link_length="${link2_length}"/>
+    </visual>
+    <collision>
+      <xacro:link2 link_length="${link2_length}"/>
+    </collision>
+
+  </link>
+  <!-- wrist_jt -->
+  <joint name="joint5" type="continuous">
+    <parent link="elbow2"/>
+    <child link="wrist"/>
+    <xacro:link2_transform link_length="${link2_length}"/>
+    <axis xyz="0 0 1" />
+  </joint>
+
+
+  <!-- Sphere -->
+  <link name="sphere">
+
+    <visual>
+      <origin xyz="0 0 0" rpy="-1.57079633 0 0" />
+      <geometry>
+        <mesh filename="package://meshes/Sphere.obj" scale="0.0254 0.0254 0.0254"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="-1.57079633 0 0" />
+      <geometry>
+        <mesh filename="package://meshes/Sphere.obj" scale="0.0254 0.0254 0.0254"/>
+      </geometry> 
+    </collision>
+
+  </link>
+  <!-- sphere_jt -->
+  <joint name="joint7" type="continuous">
+    <parent link="wrist"/>
+    <child link="sphere"/>
+    <origin xyz="0 0 0" rpy="1.57079633 0 0"/>
+    <axis xyz="0 0 1" />
+  </joint>
+
+
+  <!-- Tool Drive -->
+  <link name="manip">
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://meshes/Manip.obj" scale="0.0254 0.0254 0.0254"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://meshes/Manip.obj" scale="0.0254 0.0254 0.0254"/>
+      </geometry> 
+    </collision>
+
+  </link>
+  <!-- manip_jt -->
+  <joint name="joint8" type="continuous">
+    <parent link="sphere"/>
+    <child link="manip"/>
+    <origin xyz="0 0 0" rpy="-1.57079633 0 0"/>
+    <axis xyz="0 0 1" />
+  </joint>
+
+</robot>
