@@ -499,7 +499,7 @@ MonoBehaviour:
   m_MoveSpeed: 1
   m_InAirControlModifier: 0.5
   m_EnableStrafe: 1
-  m_EnableFly: 0
+  m_EnableFly: 1
   m_ForwardSource: {fileID: 203302695869583273}
   m_LeftHandMoveInput:
     m_InputSourceMode: 2
@@ -1055,7 +1055,7 @@ Transform:
   m_GameObject: {fileID: 8981949430728497826}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.1176, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

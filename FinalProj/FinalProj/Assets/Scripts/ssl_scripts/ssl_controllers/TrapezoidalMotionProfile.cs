@@ -38,7 +38,7 @@ public class TrapezoidalMotionProfile : MonoBehaviour
         }
         else
         {
-            return;
+            return 0f;
         }
     }
 }

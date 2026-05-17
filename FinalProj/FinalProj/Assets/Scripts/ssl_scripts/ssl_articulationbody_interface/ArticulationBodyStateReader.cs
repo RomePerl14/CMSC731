@@ -82,14 +82,14 @@ namespace SSL{
                 tooldriveNames = new string[articulationChain.Length-tooldrive_start_index]; // initialze the length of the array to be the length of the number of tool drives
             }
 
-            getJointNames(); // Get the names of the joints
-            getToolDriveNames(); // Get the names of the tooldrives
+            GetJointNames(); // Get the names of the joints
+            GetToolDriveNames(); // Get the names of the tooldrives
 
             numJoints = tooldrive_start_index-1; // The number of joint_positions is the length of the array - 1 (since we don't include the base articulation body)
         }
 
         // Non-accessible methods
-        private void getJointNames() // Gets the joint names
+        private void GetJointNames() // GetS the joint names
         {
             for(int i=1;i<tooldrive_start_index;i++)
             {
@@ -98,7 +98,7 @@ namespace SSL{
             }
         }
 
-        private void getToolDriveNames() // Get the tool drive names
+        private void GetToolDriveNames() // Get the tool drive names
         {
             int count = 0; // start a indexer
             for(int i=tooldrive_start_index;i<articulationChain.Length;i++) // go through every tool drive
@@ -112,27 +112,27 @@ namespace SSL{
         }
 
         // Accessible methods
-        public double getSingleJointPositionInDegrees(string _joint_name) // Get a single joint's position based on it's name (in degrees)
+        public double GetSingleJointPositionInDegrees(string _joint_name) // Get a single joint's position based on it's name (in degrees)
         {
             // TODO: add catch statement
             return articulationChain[jointIndex[_joint_name]].jointPosition[0] * (180/System.Math.PI);
         }
-        public double getSingleJointPositionInDegrees(int _joint_number) // Get a single joint's position based on it's index (in degrees)
+        public double GetSingleJointPositionInDegrees(int _joint_number) // Get a single joint's position based on it's index (in degrees)
         {
             // TODO, add catch statement
             return articulationChain[_joint_number].jointPosition[0] * (180/System.Math.PI);
         }
-        public double getSingleJointPosition(string _joint_name) // Get a single joint's position based on it's name
+        public double GetSingleJointPosition(string _joint_name) // Get a single joint's position based on it's name
         {
             // TODO: add catch statment to watch for bad inputs
             return articulationChain[jointIndex[_joint_name]].jointPosition[0];
         }
-        public double getSingleJointPosition(int _joint_number) // Get a single joint's position based on it's index
+        public double GetSingleJointPosition(int _joint_number) // Get a single joint's position based on it's index
         {
             // TODO: add catch statement to watch for bad inputs
             return articulationChain[_joint_number].jointPosition[0];
         }
-        public double[] getJointPositionsInDegrees() // Get an array of joint positions in degrees
+        public double[] GetJointPositionsInDegrees() // Get an array of joint positions in degrees
         {
             double[] joint_positions = new double[tooldrive_start_index-1]; // Create an array of doubles to pass
             for(int i=1;i<tooldrive_start_index;i++) // Look through the ArticulationBody chain anf get the positions at each joint
@@ -142,7 +142,7 @@ namespace SSL{
             return joint_positions; // return the array
         }
 
-        public float[] getJointPositionsInDegreesAsFloats() // Get an array of joint positions in degrees
+        public float[] GetJointPositionsInDegreesAsFloats() // Get an array of joint positions in degrees
         {
             float[] joint_positions = new float[tooldrive_start_index-1]; // Create an array of doubles to pass
             for(int i=1;i<tooldrive_start_index;i++) // Look through the ArticulationBody chain anf get the positions at each joint
@@ -151,7 +151,7 @@ namespace SSL{
             }
             return joint_positions; // return the array
         }
-        public double[] getJointPositions() // Get an array of joint positions in radians
+        public double[] GetJointPositions() // Get an array of joint positions in radians
         {
             double[] joint_positions = new double[tooldrive_start_index-1]; // Create an array of doubles to pass
             for(int i=1;i<tooldrive_start_index;i++) // Look through the ArticulationBody chain anf get the positions at each joint
@@ -160,7 +160,7 @@ namespace SSL{
             }
             return joint_positions; // return the array
         }
-        public float[] getJointPositionsAsFloats() // Get an array of joint positions in radians
+        public float[] GetJointPositionsAsFloats() // Get an array of joint positions in radians
         {
             float[] joint_positions = new float[tooldrive_start_index-1]; // Create an array of doubles to pass
             for(int i=1;i<tooldrive_start_index;i++) // Look through the ArticulationBody chain anf get the positions at each joint
@@ -170,17 +170,17 @@ namespace SSL{
             return joint_positions; // return the array
         }
 
-        public double getSingleJointVelocity(string _joint_name) // Get the velocity of a single joint using it's name
+        public double GetSingleJointVelocity(string _joint_name) // Get the velocity of a single joint using it's name
         {
             //TODO: add catch statement
             return articulationChain[jointIndex[_joint_name]].jointVelocity[0];
         }
-        public double getSingleJointVelocity(int _joint_number) // Get the velocity of a single joint using it's index
+        public double GetSingleJointVelocity(int _joint_number) // Get the velocity of a single joint using it's index
         {
             //TODO: add catch statement
             return articulationChain[_joint_number].jointVelocity[0];
         }
-        public double[] getJointVelocities() // Get the Joint velocities in reduced coordinates (NOT WORLD SPACE COORDINATES)
+        public double[] GetJointVelocities() // Get the Joint velocities in reduced coordinates (NOT WORLD SPACE COORDINATES)
         {
             double[] joint_velocities = new double[tooldrive_start_index]; // Initialize an array of doubles
             for(int i=1;i<tooldrive_start_index;i++) // Go through every joint in the chain
@@ -191,7 +191,7 @@ namespace SSL{
         }
 
         // NOTE: Doesn't really work? investigate
-        public double[] getJointEfforts() // Get the forces acting on each joint in reduced coordinates (NO WORLD SPACE COORDINATES)
+        public double[] GetJointEfforts() // Get the forces acting on each joint in reduced coordinates (NO WORLD SPACE COORDINATES)
         {
             double[] joint_efforts = new double[tooldrive_start_index]; // Initialize an array of doubles
             for(int i=1;i<tooldrive_start_index;i++) // Go through every joint in the chain
@@ -202,7 +202,7 @@ namespace SSL{
         }
 
         /* TOOLDRIVES SECTION - NEED TO REFINE AND FIX AFTER MAKING BETTER TOOLDRIVES*/
-        public double[] getToolDrivePositions() // TODO - TEST AND EDIT AND COMMENT (need new end effectors)
+        public double[] GetToolDrivePositions() // TODO - TEST AND EDIT AND COMMENT (need new end effectors)
         {
             if(tooldrive_start_index != articulationChain.Length)
             {
@@ -225,7 +225,7 @@ namespace SSL{
             }
         }
 
-        public double[] getToolDriveVelocities()
+        public double[] GetToolDriveVelocities()
         {
             if(tooldrive_start_index != articulationChain.Length)
             {
@@ -250,7 +250,7 @@ namespace SSL{
         }
         /* END TOOLDRIVE SECTION */
 
-        public float[] getJointStiffness()
+        public float[] GetJointStiffness()
         {
             float[] joint_stiffnesses = new float[tooldrive_start_index]; // Initialize a new array to use
             for(int i=1;i<tooldrive_start_index;i++)
@@ -261,7 +261,7 @@ namespace SSL{
             return joint_stiffnesses; // retrun dem jawns
         }
 
-        public float[] getJointDamping()
+        public float[] GetJointDamping()
         {
             float[] joint_damping = new float[tooldrive_start_index]; // Initialize a new array to use
             for(int i=1;i<tooldrive_start_index;i++)
@@ -272,7 +272,7 @@ namespace SSL{
             return joint_damping; // retrun dem jawns
         }
 
-        public float[] getJointForceLimit()
+        public float[] GetJointForceLimit()
         {
             float[] joint_forcelimits = new float[tooldrive_start_index]; // Initialize a new array to use
             for(int i=1;i<tooldrive_start_index;i++)
@@ -283,7 +283,7 @@ namespace SSL{
             return joint_forcelimits; // retrun dem jawns
         }
 
-        public float[] getJointUpperLimits()
+        public float[] GetJointUpperLimits()
         {
             float[] joint_limits = new float[tooldrive_start_index]; // Initialize a new array to use
             for(int i=1;i<tooldrive_start_index;i++)
@@ -294,7 +294,7 @@ namespace SSL{
             return joint_limits; // retrun dem jawns
 
         }
-        public float[] getJointLowerLimits()
+        public float[] GetJointLowerLimits()
         {
             float[] joint_limits = new float[tooldrive_start_index]; // Initialize a new array to use
             for(int i=1;i<tooldrive_start_index;i++)
@@ -306,10 +306,10 @@ namespace SSL{
         }
         
         // TODO: GET TOOL DRIVE LIMITS:
-        //public float[] getToolDriveUpperLimits()
-        //public float[] getToolDriveLowerLimits()
+        //public float[] GetToolDriveUpperLimits()
+        //public float[] GetToolDriveLowerLimits()
 
-        public GravityStatus[] getJointGravityStatus()
+        public GravityStatus[] GetJointGravityStatus()
         {
             GravityStatus[] gravity_statuses = new GravityStatus[tooldrive_start_index];
             for(int i=1;i<tooldrive_start_index;i++)
@@ -349,7 +349,7 @@ namespace SSL{
         //     return urdf_interia_status;
         // }
 
-        public ColliderStatus[] getRobotColliderStatus()
+        public ColliderStatus[] GetRobotColliderStatus()
         {
             ColliderStatus[] urdf_collider_status = new ColliderStatus[articulationChain.Length];
             for(int i=1;i<articulationChain.Length;i++)

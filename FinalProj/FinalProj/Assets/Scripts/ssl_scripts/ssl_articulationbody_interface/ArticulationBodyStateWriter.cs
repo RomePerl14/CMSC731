@@ -102,12 +102,12 @@ namespace SSL{
             // Check to see if we found to end of the robot arm
             if(tooldrive_start_index == -1)
             {
-                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : ArticulationBodyStateWriter] Could not find the end of the robot arm, do you have a joint named manip?\nSetting the tooldrive start index == to length of robot, this is gonna cause some big issues\n");
+                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : ArticulationBodyStateWriter] Could not find the end of the robot arm, do you have a joint named manip?\nSetTing the tooldrive start index == to length of robot, this is gonna cause some big issues\n");
                 tooldrive_start_index = articulationChain.Length;
             }
             // Build the DICtionaries
-            buildJointDictionary(); 
-            buildToolDriveDictionary();     
+            BuildJointDictionary(); 
+            BuildToolDriveDictionary();     
             
             // build private variables:
             write_positions = new ArticulationReducedSpace[tooldrive_start_index]; // resize to match the size of our arm (not including tooldrives)
@@ -118,7 +118,7 @@ namespace SSL{
     /*---------------- PRIVATE FUNCTIONS ----------------*/
         /// <summary> Builds the dictionary of joints mapping names to indicies, so we can use the name of a joint instead of the index (if we want to) </summary>
         /// <Returns> nothing... </Returns>
-        private void buildJointDictionary()
+        private void BuildJointDictionary()
         {
             // Put all of the names of the joints into a map with it's index
             for(int i=1;i<tooldrive_start_index;i+=1)
@@ -129,7 +129,7 @@ namespace SSL{
 
         /// <summary> Builds the dictionary of tooldrives mapping names to indicies, so we can use the name of a joint instead of the index (if we want to) </summary>
         /// <Returns> nothing... </Returns>
-        private void buildToolDriveDictionary()
+        private void BuildToolDriveDictionary()
         {
             // Put all of the names of the tooldrives into a map with it's index
             for(int i=tooldrive_start_index;i<articulationChain.Length;i+=1)
@@ -140,19 +140,19 @@ namespace SSL{
 
 
     /*---------------- SET JOINT POSITIONS ----------------*/
-        public bool setControlMode(SSL.ControlModes _control_mode)
+        public bool SetControlMode(SSL.ControlModes _control_mode)
         {
             switch(_control_mode)
             {
                 case ControlModes.POSITION_CONTROL:
-                    UnityEngine.Debug.Log("[ArticulationBodyStateWriter : setControlMode] Control mode set to: " + _control_mode.ToString() + "\n");
-                    writeUniformStiffnessToJoints(10000f);
-                    writeUniformDampingToJoints(1000f);
+                    UnityEngine.Debug.Log("[ArticulationBodyStateWriter : SetControlMode] Control mode set to: " + _control_mode.ToString() + "\n");
+                    WriteUniformStiffnessToJoints(10000f);
+                    WriteUniformDampingToJoints(1000f);
                     break;
                 case ControlModes.VR_CONTROL:
-                    UnityEngine.Debug.Log("[ArticulationBodyStateWriter : setControlMode] Control mode set to: " + _control_mode.ToString() + "\n");
-                    writeUniformStiffnessToJoints(0f); // not stiffness for VR control
-                    writeUniformDampingToJoints(1000f);
+                    UnityEngine.Debug.Log("[ArticulationBodyStateWriter : SetControlMode] Control mode set to: " + _control_mode.ToString() + "\n");
+                    WriteUniformStiffnessToJoints(0f); // not stiffness for VR control
+                    WriteUniformDampingToJoints(1000f);
                     break;
             }
             return true;
@@ -164,12 +164,12 @@ namespace SSL{
         /// </summary>
         /// <param name="_positions"> An array of floats to send to each joint of the arm (needs to be the same size) - unit is radians </param>
         /// <returns> Returns a 'true' boolean upon success </returns>
-        public bool setJointPositions(float[] _positions)
+        public bool SetJointPositions(float[] _positions)
         {   
             // Check to see if the input array is the same length as our robot arm
             if(_positions.Length != tooldrive_start_index-1) 
             {   // If it's not, throw an error
-                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : setJointPositions] Incorrect size array passed to write function! Array should be of size: " + (tooldrive_start_index-1).ToString() + " Inputted array size: " + _positions.Length.ToString() + "\n");
+                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : SetJointPositions] Incorrect size array passed to write function! Array should be of size: " + (tooldrive_start_index-1).ToString() + " Inputted array size: " + _positions.Length.ToString() + "\n");
                 return false; // return false
             }
             
@@ -192,16 +192,16 @@ namespace SSL{
         /// <param name="_joint_name"> The name of the joint </param>
         /// <param name="_position"> A float for position to send to each joint of the arm (needs to be the same size) - unit is radians </param>
         /// <returns> Returns a 'true' boolean upon success </returns>
-        public bool setSingleJointPosition(string _joint_name, float _position) // Write joint positions, in radians
+        public bool SetSingleJointPosition(string _joint_name, float _position) // Write joint positions, in radians
         {
             // Check to make sure the joint exists in the dictionary
             if (jointIndex.ContainsKey(_joint_name) == false)
             {   // If it doesnt' exists, throw an error
-                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : setSingleJointPosition] No joint named '" + _joint_name + "' on the current robot!\n");
+                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : SetSingleJointPosition] No joint named '" + _joint_name + "' on the current robot!\n");
                 return false; // return false
             }
 
-            // For detailed description of what's being done in this chunk, see the 'setJointPositions()' function above
+            // For detailed description of what's being done in this chunk, see the 'SetJointPositions()' function above
             write_position = articulationChain[jointIndex[_joint_name]].jointPosition;
             joint_drive = articulationChain[jointIndex[_joint_name]].xDrive;
             write_position[0] = _position;
@@ -217,15 +217,15 @@ namespace SSL{
         /// <param name="_joint_number"> An integer representing the joint number (not joint index) </param>
         /// <param name="_position"> A float for position to send to each joint of the arm (needs to be the same size) - unit is radians </param>
         /// <returns> Returns a 'true' boolean upon success </returns>
-        public bool setSingleJointPosition(int _joint_number, float _position)
+        public bool SetSingleJointPosition(int _joint_number, float _position)
         {
             // Check to make sure the joint number exists
             if (_joint_number <= 0 || _joint_number > tooldrive_start_index)
             {   // If it doesnt' exists, throw an error
-                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : setSingleJointPosition] No joint numbered: " + _joint_number.ToString() + " on the robot!");
+                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : SetSingleJointPosition] No joint numbered: " + _joint_number.ToString() + " on the robot!");
                 return false; // return false
             }
-            // For detailed description of what's being done in this chunk, see the 'writeJointPositions()' function above
+            // For detailed description of what's being done in this chunk, see the 'WriteJointPositions()' function above
             write_position = articulationChain[_joint_number].jointPosition;
             joint_drive = articulationChain[_joint_number].xDrive;
             write_position[0] = _position;
@@ -238,18 +238,18 @@ namespace SSL{
 
     /*---------------- WRITE JOINT POSITIONS ----------------*/
         /// <summary> 
-        ///     [WARNING: Large jumps in position values do not guarantee a specific velocity] - Writes position commands to
+        ///     [WARNING: Large jumps in position values do not guarantee a specific velocity] - WriteS position commands to
         ///     each joint on the arm provided by an array of positions, using simulated torque commands and some sort of simulated
         ///     absolute encoder. (Note: the "writePositions" suite of functions should be used for general position control interfaces)
         /// </summary>
         /// <param name="_positions"> An array of floats to send to each joint of the arm (needs to be the same size) - unit is radians </param>
         /// <returns> Returns a 'true' boolean upon success </returns>
-        public bool writeJointPositions(float[] _positions)
+        public bool WriteJointPositions(float[] _positions)
         {
             // Check to see if the input array is the same length as our robot arm
             if(_positions.Length != tooldrive_start_index-1)
             {   // If it's not, throw an error
-                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : writeJointPositions] Incorrect size array passed to write function! Array should be of size: " + (tooldrive_start_index-1).ToString() + " Inputted array size: " + _positions.Length.ToString() + "\n");
+                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : WriteJointPositions] Incorrect size array passed to write function! Array should be of size: " + (tooldrive_start_index-1).ToString() + " Inputted array size: " + _positions.Length.ToString() + "\n");
                 return false; // return false
             }
             
@@ -263,46 +263,46 @@ namespace SSL{
             return true;
         }
         /// <summary> 
-        ///     [WARNING: Large jumps in position values do not guarantee a specific velocity] - Writes a position command to
+        ///     [WARNING: Large jumps in position values do not guarantee a specific velocity] - WriteS a position command to
         ///     a name-specified joint on the arm, using torque commands and some sort of simulated absolute encoder. 
         ///     (Note: the "writePositions" suite of functions should be used for general position control interfaces) 
         /// </summary>
         /// <param name="_joint_name"> The name of the joint, to be used by the joint dictionary </param>
         /// <param name="_position"> The desired position - unit is radians </param>
         /// <returns> Returns a 'true' boolean upon success </returns>
-        public bool writeSingleJointPosition(string _joint_name, float _position) // Write joint positions, in radians
+        public bool WriteSingleJointPosition(string _joint_name, float _position) // Write joint positions, in radians
         {
             // Check to make sure the joint exists in the dictionary
             if (jointIndex.ContainsKey(_joint_name) == false)
             {   // If it doesnt' exists, throw an error
-                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : writeSingleJointPosition] No joint named '" + _joint_name + "' on the current robot!\n");
+                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : WriteSingleJointPosition] No joint named '" + _joint_name + "' on the current robot!\n");
                 return false; // return false
             }
 
-            // For detailed description of what's being done in this chunk, see the 'writeJointPositions()' function above
+            // For detailed description of what's being done in this chunk, see the 'WriteJointPositions()' function above
             joint_drive = articulationChain[jointIndex[_joint_name]].xDrive;
             joint_drive.target = (float)(_position*(180/System.Math.PI));
             articulationChain[jointIndex[_joint_name]].xDrive = joint_drive;
             return true;
         }
         /// <summary> 
-        ///     [WARNING: Large jumps in position values do not guarantee a specific velocity] - Writes a position command
+        ///     [WARNING: Large jumps in position values do not guarantee a specific velocity] - WriteS a position command
         ///      to a number-specified joint on the arm, using torque commands and some sort of simulated absolute encoder. 
         ///     (Note: the "writePositions" suite of functions should be used for general position control interfaces) 
         /// </summary>
         /// <param name="_joint_number"> The joint number, from 1 -> n (with n being the number of joints) </param>
         /// <param name="_position"> The desired position - unit is radians</param>
         /// <returns> Returns a 'true' boolean upon success </returns>
-        public bool writeSingleJointPosition(int _joint_number, float _position)
+        public bool WriteSingleJointPosition(int _joint_number, float _position)
         {
             // Check to make sure the joint number exists
             if (_joint_number <= 0 || _joint_number > tooldrive_start_index)
             {   // If it doesnt' exists, throw an error
-                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : writeSingleJointPosition] No joint numbered: " + _joint_number.ToString() + " on the robot!");
+                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : WriteSingleJointPosition] No joint numbered: " + _joint_number.ToString() + " on the robot!");
                 return false; // return false
             }
 
-            // For detailed description of what's being done in this chunk, see the 'writeJointPositions()' function above
+            // For detailed description of what's being done in this chunk, see the 'WriteJointPositions()' function above
             joint_drive = articulationChain[_joint_number].xDrive;
             joint_drive.target = (float)(_position*(180/System.Math.PI));
             articulationChain[_joint_number].xDrive = joint_drive;
@@ -311,9 +311,9 @@ namespace SSL{
 
 
     /*---------------- JOINT LIMITS MODIFICATIONS ----------------*/
-        /// <summary> Resets the joint limits from whatever the URDF specified to be -360 and 360 degress for the lower and upper limits, respectively</summary>
+        /// <summary> ReSetS the joint limits from whatever the URDF specified to be -360 and 360 degress for the lower and upper limits, respectively</summary>
         /// <returns> Returns a "true" boolean upon success </returns>
-        public bool resetJointLimits()
+        public bool ResetJointLimits()
         {
             for(int i=1;i<tooldrive_start_index;i+=1) //Go through each joint and reset the limits
             {
@@ -324,15 +324,15 @@ namespace SSL{
             }
             return true;
         }
-        /// <summary> Resets a single joint's limits from whatever the URDF specified to be -360 and 360 degress for the lower and upper limits, respectively</summary>
+        /// <summary> ReSetS a single joint's limits from whatever the URDF specified to be -360 and 360 degress for the lower and upper limits, respectively</summary>
         ///<param name="_joint_name"> The name of the joint to reset </param>
         /// <returns> Returns a "true" boolean upon success </returns>
-        public bool resetSingleJointLimit(string _joint_name)
+        public bool ResetSingleJointLimit(string _joint_name)
         {
             // Check to make sure the joint exists in the dictionary
             if (jointIndex.ContainsKey(_joint_name) == false)
             {   // If it doesnt' exists, throw an error
-                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : resetSingleJointLimit] No joint named '" + _joint_name + "' on the current robot!\n");
+                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : reSetSingleJointLimit] No joint named '" + _joint_name + "' on the current robot!\n");
                 return false; // return false
             }
 
@@ -343,15 +343,15 @@ namespace SSL{
             articulationChain[jointIndex[_joint_name]].xDrive = joint_drive; // Set the current ArticulationBody's xDrive property (an ArticulationDrive type) equal to the local ArticulationDrive value
             return true;
         }
-        /// <summary> Resets a single joint's limits from whatever the URDF specified to be -360 and 360 degress for the lower and upper limits, respectively</summary>
+        /// <summary> ReSetS a single joint's limits from whatever the URDF specified to be -360 and 360 degress for the lower and upper limits, respectively</summary>
         ///<param name="_joint_number"> The joint number to reset (not the joint index) </param>
         /// <returns> Returns a "true" boolean upon success </returns>
-        public bool resetSingleJointLimit(int _joint_number)
+        public bool ResetSingleJointLimit(int _joint_number)
         {
             // Check to make sure the joint number exists
             if (_joint_number <= 0 || _joint_number > tooldrive_start_index)
             {   // If it doesnt' exists, throw an error
-                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : resetSingleJointLimit] No joint numbered: " + _joint_number.ToString() + " on the robot!");
+                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : reSetSingleJointLimit] No joint numbered: " + _joint_number.ToString() + " on the robot!");
                 return false; // return false
             }
 
@@ -362,16 +362,16 @@ namespace SSL{
             articulationChain[_joint_number].xDrive = joint_drive; // Set the current ArticulationBody's xDrive property (an ArticulationDrive type) equal to the local ArticulationDrive value
             return true;
         }
-        /// <summary> Rewrites the joint limits in Unity to the desired joint limits for each joint in the robot </summary>
+        /// <summary> RewriteS the joint limits in Unity to the desired joint limits for each joint in the robot </summary>
         /// <param name="_joint_limits"> A list of float arrays (2 indicies each) that contain the lower and upper limits of each joint at index 0 and 1 respectively </param>
         /// <returns> Returns a "true" boolean upon success </returns>
-        public bool rewriteJointLimits(List<float[]> _joint_limits)
+        public bool RewriteJointLimits(List<float[]> _joint_limits)
         {
             // Make sure that the inputted list includes all of the links
             if (_joint_limits.Count != tooldrive_start_index-1)
             {
                 // Throw an error is it's not
-                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : rewriteJointLimits] The inputted list is not the correct size! Expected size: " + (tooldrive_start_index-1).ToString() + ", Inputted size: " + _joint_limits.Count.ToString());
+                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : RewriteJointLimits] The inputted list is not the correct size! Expected size: " + (tooldrive_start_index-1).ToString() + ", Inputted size: " + _joint_limits.Count.ToString());
                 return false;
             }
             for(int i=1;i<tooldrive_start_index;i+=1) //Go through and rewrite the limits of each joint in Unity (not in the URDF)
@@ -380,7 +380,7 @@ namespace SSL{
                 if (_joint_limits[i].Length != 2)
                 {
                     // If each internal float array is not 2 indicies, throw and error and return
-                    UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : rewriteJointLimits] Upper and lower joint limits not given at index " + i.ToString() + ". The limits for each joint must be inputted as a 2-index float array! Given size: " + _joint_limits[i].Length.ToString());
+                    UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : RewriteJointLimits] Upper and lower joint limits not given at index " + i.ToString() + ". The limits for each joint must be inputted as a 2-index float array! Given size: " + _joint_limits[i].Length.ToString());
                     return false;
                 }  
                 // Set the limits of the joint
@@ -391,23 +391,23 @@ namespace SSL{
             }
             return true;
         }
-        /// <summary> Rewrites a single joints limits in Unity to the desired inputted joint limits </summary>
+        /// <summary> RewriteS a single joints limits in Unity to the desired inputted joint limits </summary>
         /// <param name="_joint_name"> The name of the joint </param>
         /// <param name="_joint_limits"> A 2-index float array for the lower and upper limits being index 0 and 1 respectively </param>
         /// <returns> Returns a "true" boolean upon success </returns>
-        public bool rewriteSingleJointLimit(string _joint_name, float[] _joint_limits)
+        public bool RewriteSingleJointLimit(string _joint_name, float[] _joint_limits)
         {
             // Check to make sure the joint exists in the dictionary
             if (jointIndex.ContainsKey(_joint_name) == false)
             {   // If it doesnt' exists, throw an error
-                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : rewriteSingleJointLimits] No joint named '" + _joint_name + "' on the current robot!\n");
+                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : RewriteSingleJointLimits] No joint named '" + _joint_name + "' on the current robot!\n");
                 return false; // return false
             }
             // Check to make sure we were given two limits per joint
             if (_joint_limits.Length != 2)
             {
                 // If each internal float array is not 2 indicies, throw and error and return
-                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : rewriteSingleJointLimits] Upper and lower joint limits not given! Joint limits must be inputted as an 2-index float array! Given size: " + _joint_limits.Length.ToString());
+                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : RewriteSingleJointLimits] Upper and lower joint limits not given! Joint limits must be inputted as an 2-index float array! Given size: " + _joint_limits.Length.ToString());
                 return false;
             }
 
@@ -418,23 +418,23 @@ namespace SSL{
             articulationChain[jointIndex[_joint_name]].xDrive = joint_drive; // Set the current ArticulationBody's xDrive property (an ArticulationDrive type) equal to the local ArticulationDrive value
             return true;
         }
-        /// <summary> Rewrites a single joints limits in Unity to the desired inputted joint limits </summary>
+        /// <summary> RewriteS a single joints limits in Unity to the desired inputted joint limits </summary>
         /// <param name="_joint_number"> The joint number (not index) </param>
         /// <param name="_joint_limits"> A 2-index float array for the lower and upper limits being index 0 and 1 respectively </param>
         /// <returns> Returns a "true" boolean upon success </returns>
-        public bool rewriteSingleJointLimit(int _joint_number, float[] _joint_limits)
+        public bool RewriteSingleJointLimit(int _joint_number, float[] _joint_limits)
         {
             // Check to make sure the joint number exists
             if (_joint_number <= 0 || _joint_number > tooldrive_start_index)
             {   // If it doesnt' exists, throw an error
-                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : rewriteSingleJointLimit] No joint numbered: " + _joint_number.ToString() + " on the robot!");
+                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : RewriteSingleJointLimit] No joint numbered: " + _joint_number.ToString() + " on the robot!");
                 return false; // return false
             }
             // Check to make sure we were given two limits per joint
             if (_joint_limits.Length != 2)
             {
                 // If each internal float array is not 2 indicies, throw and error and return
-                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : rewriteSingleJointLimits] Upper and lower joint limits not given! Joint limits must be inputted as an 2-index float array! Given size: " + _joint_limits.Length.ToString());
+                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : RewriteSingleJointLimits] Upper and lower joint limits not given! Joint limits must be inputted as an 2-index float array! Given size: " + _joint_limits.Length.ToString());
                 return false;
             }  
 
@@ -452,12 +452,12 @@ namespace SSL{
         /// Instantaneously set the joint positions to a desired value (Should only be used for initializing home positions at the start, or recalibrating the arm. Should NOT be used for general position commanding) </summary>
         /// <param name="_positions"> An array of floats to send to each joint of the arm (needs to be the same size) - unit is radians </param>
         /// <returns> Returns a 'true' boolean upon success </returns>
-        public bool setToolDrivePositions(float[] _positions)
+        public bool SetToolDrivePositions(float[] _positions)
         {   
             // Check to see if the input array is the same length as the amount of tooldrives
             if(_positions.Length != articulation_chain_length-tooldrive_start_index-1) 
             {   // If it's not, throw an error
-                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : setToolDrivePositions] Incorrect size array passed to write function! Array should be of size: " + (tooldrive_start_index-1).ToString() + " Inputted array size: " + _positions.Length.ToString() + "\n");
+                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : SetToolDrivePositions] Incorrect size array passed to write function! Array should be of size: " + (tooldrive_start_index-1).ToString() + " Inputted array size: " + _positions.Length.ToString() + "\n");
                 return false; // return false
             }
             
@@ -478,16 +478,16 @@ namespace SSL{
         /// <param name="_joint_name"> The name of the joint </param>
         /// <param name="_position"> A float for position to send to each joint of the arm (needs to be the same size) - unit is radians </param>
         /// <returns> Returns a 'true' boolean upon success </returns>
-        public bool setSingleToolDrivePosition(string _joint_name, float _position) // Write joint positions, in radians
+        public bool SetSingleToolDrivePosition(string _joint_name, float _position) // Write joint positions, in radians
         {
             // Check to make sure the joint exists in the dictionary
             if (tooldriveIndex.ContainsKey(_joint_name) == false)
             {   // If it doesnt' exists, throw an error
-                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : setSingleToolDrivePosition] No tooldrive joint named '" + _joint_name + "' on the current robot!\n");
+                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : SetSingleToolDrivePosition] No tooldrive joint named '" + _joint_name + "' on the current robot!\n");
                 return false; // return false
             }
 
-            // For detailed description of what's being done in this chunk, see the 'setToolDrivePositions()' function above
+            // For detailed description of what's being done in this chunk, see the 'SetToolDrivePositions()' function above
             write_position = articulationChain[tooldriveIndex[_joint_name]].jointPosition;
             joint_drive = articulationChain[tooldriveIndex[_joint_name]].xDrive;
             write_position[0] = _position;
@@ -501,15 +501,15 @@ namespace SSL{
         /// <param name="_joint_number"> An integer representing the joint number (not joint index) </param>
         /// <param name="_position"> A float for position to send to each joint of the arm (needs to be the same size) - unit is radians </param>
         /// <returns> Returns a 'true' boolean upon success </returns>
-        public bool setSingleToolDrivePosition(int _joint_number, float _position)
+        public bool SetSingleToolDrivePosition(int _joint_number, float _position)
         {
             // Check to make sure the joint number exists
             if (_joint_number <= tooldrive_start_index-1 || _joint_number > articulation_chain_length)
             {   // If it doesnt' exists, throw an error
-                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : setSingleJointPosition] No tooldrive joint numbered: " + _joint_number.ToString() + " on the robot!");
+                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : SetSingleJointPosition] No tooldrive joint numbered: " + _joint_number.ToString() + " on the robot!");
                 return false; // return false
             }
-            // For detailed description of what's being done in this chunk, see the 'setToolDrivePositions()' function above
+            // For detailed description of what's being done in this chunk, see the 'SetToolDrivePositions()' function above
             write_position = articulationChain[_joint_number].jointPosition;
             joint_drive = articulationChain[_joint_number].xDrive;
             write_position[0] = _position;
@@ -521,15 +521,15 @@ namespace SSL{
 
 
     /*---------------- WRITE TOOLDRIVE POSITIONS ----------------*/
-        /// <summary> Writes the tooldrives to a desire position (either translational or rotational) </summary>
+        /// <summary> WriteS the tooldrives to a desire position (either translational or rotational) </summary>
         /// <param name="_positions"> The positions to write to each tool drive, in the same order that the tool drives are built </param>
         /// <returns> Returns a "true" boolean upon success </returns>
-        public bool writeToolDrivePositions(float[] _positions)
+        public bool WriteToolDrivePositions(float[] _positions)
         {
             // Check to see if the input array is the same length as the amount of tooldrives
             if(_positions.Length != articulation_chain_length-tooldrive_start_index-1) 
             {   // If it's not, throw an error
-                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : setToolDrivePositions] Incorrect size array passed to write function! Array should be of size: " + (tooldrive_start_index-1).ToString() + " Inputted array size: " + _positions.Length.ToString() + "\n");
+                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : SetToolDrivePositions] Incorrect size array passed to write function! Array should be of size: " + (articulation_chain_length-tooldrive_start_index-1).ToString() + " Inputted array size: " + _positions.Length.ToString() + "\n");
                 return false; // return false
             }
             
@@ -542,69 +542,96 @@ namespace SSL{
             }
             return true;
         }
-        /// <summary> Writes a single position to a desired tooldrive defined by it's name </summary>
+        /// <summary> WriteS a single position to a desired tooldrive defined by it's name </summary>
         /// <param name="_joint_name"> The name of the tooldrive </param>
         /// <param name="_position"> The desired position of the tooldrive </param>
         /// <returns> Returns a "true" boolean upon success </returns>
-        public bool writeSingleToolDrivePosition(string _joint_name, float _position) // Write joint positions, in radians
+        public bool WriteSingleToolDrivePosition(string _joint_name, float _position) // Write joint positions, in radians
         {
             // Check to make sure the joint exists in the dictionary
             if (tooldriveIndex.ContainsKey(_joint_name) == false)
             {   // If it doesnt' exists, throw an error
-                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : writeSingleToolDrivePosition] No tooldrive joint named '" + _joint_name + "' on the current robot!\n");
+                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : WriteSingleToolDrivePosition] No tooldrive joint named '" + _joint_name + "' on the current robot!\n");
                 return false; // return false
             }
 
-            // For detailed description of what's being done in this chunk, see the 'setToolDrivePositions()' function above
+            // For detailed description of what's being done in this chunk, see the 'SetToolDrivePositions()' function above
             joint_drive = articulationChain[tooldriveIndex[_joint_name]].xDrive;
             joint_drive.target = (float)(_position*(180/System.Math.PI));
             articulationChain[tooldriveIndex[_joint_name]].xDrive = joint_drive;
             return true;
         }
-        /// <summary> Writes a single position to a desired tooldrive defined by it's joint number (not index) </summary>
+        /// <summary> WriteS a single position to a desired tooldrive defined by it's joint number (not index) </summary>
         /// <param name="_joint_number"> The joint number (not the index) of the tooldrive </param>
         /// <param name="_position"> The desired position of the tooldrive </param>
         /// <returns> Returns a "true" boolean upon success </returns>
-        public bool writeSingleToolDrivePosition(int _joint_number, float _position)
+        public bool WriteSingleToolDrivePosition(int _joint_number, float _position)
         {
             // Check to make sure the joint number exists
             if (_joint_number <= tooldrive_start_index-1 || _joint_number > articulation_chain_length)
             {   // If it doesnt' exists, throw an error
-                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : writeSingleJointPosition] No tooldrive joint numbered: " + _joint_number.ToString() + " on the robot!");
+                UnityEngine.Debug.LogError("[ArticulationBodyStateWriter : WriteSingleJointPosition] No tooldrive joint numbered: " + _joint_number.ToString() + " on the robot!");
                 return false; // return false
             }
-            // For detailed description of what's being done in this chunk, see the 'setToolDrivePositions()' function above
+            // For detailed description of what's being done in this chunk, see the 'SetToolDrivePositions()' function above
             joint_drive = articulationChain[_joint_number].xDrive;
             joint_drive.target = (float)(_position*(180/System.Math.PI));
             articulationChain[_joint_number].xDrive = joint_drive;
             return true;
         }
 
-        public bool writeToolDriveVelocities(float velocities)
+        public bool WriteToolDriveVelocities(float velocities)
         {
             return true;
         }
 
-        public bool closeToolDrives()
+        public bool CloseToolDrives() // Temporary - do better
         {
+            for(int i=tooldrive_start_index;i<articulationChain.Length;i+=1)
+            {
+                ArticulationDrive limit = articulationChain[i].xDrive;
+                if(limit.lowerLimit == 0)  
+                {
+                    limit.target = limit.lowerLimit;
+                }
+                else if(limit.upperLimit == 0)
+                {
+                    limit.target = limit.upperLimit;
+                }
+                articulationChain[i].xDrive = limit;
+            }
             return true;
         }
 
-        public bool openToolDrives()
+        public bool OpenToolDrives() // Temporary - do better
         {
+            for(int i=tooldrive_start_index;i<articulationChain.Length;i+=1)
+            {
+                ArticulationDrive limit = articulationChain[i].xDrive;
+                if(limit.lowerLimit == 0)
+                {
+                    limit.target = limit.upperLimit;
+                }
+                else if(limit.upperLimit == 0)
+                {
+                    limit.target = limit.lowerLimit;
+                }
+                articulationChain[i].xDrive = limit;
+            }
             return true;
         }
 
-        public bool writeJointTargetVelocities(float[] velocities)
+
+        public bool WriteJointTargetVelocities(float[] velocities)
         {
             return true;
         }
         
-        public bool writeSingleJointTargetVelocity(string jointName, float velocity)
+        public bool WriteSingleJointTargetVelocity(string jointName, float velocity)
         {
             return true;
         }
-        public bool writeSingleJointVelocity(int _joint_number, float _velocity)
+        public bool WriteSingleJointVelocity(int _joint_number, float _velocity)
         {
             write_velocity = articulationChain[_joint_number].jointVelocity;
             joint_drive = articulationChain[_joint_number].xDrive;
@@ -616,17 +643,17 @@ namespace SSL{
             return true;
         }
 
-        public bool writeJointVelocities(float[] velocities)
+        public bool WriteJointVelocities(float[] velocities)
         {
             return true;
         }
 
-        public bool writeSingleJointVelocities(string jointName, float velocity)
+        public bool WriteSingleJointVelocities(string jointName, float velocity)
         {
             return true;
         }
 
-        public bool writeStiffnessToJoints(float[] _stiffnesses)
+        public bool WriteStiffnessToJoints(float[] _stiffnesses)
         {
             for(int i=1;i<tooldrive_start_index;i+=1)
             {
@@ -636,7 +663,7 @@ namespace SSL{
             }
             return true;
         }
-        public bool writeUniformStiffnessToJoints(float _stiffness)
+        public bool WriteUniformStiffnessToJoints(float _stiffness)
         {
             for(int i=1;i<tooldrive_start_index;i+=1)
             {
@@ -646,16 +673,16 @@ namespace SSL{
             }
             return true;
         }
-        public bool writeStiffnessToSingleJoint(string jointName, float stiffness)
+        public bool WriteStiffnessToSingleJoint(string jointName, float stiffness)
         {
             return true;
         }
-        public bool writeStiffnessToSingleJoint(int jointIndex, float stiffness)
+        public bool WriteStiffnessToSingleJoint(int jointIndex, float stiffness)
         {
             return true;
         }
 
-        public bool writeDampingToJoints(float[] _dampings)
+        public bool WriteDampingToJoints(float[] _dampings)
         {
             for(int i=1;i<tooldrive_start_index;i+=1)
             {
@@ -665,7 +692,7 @@ namespace SSL{
             }
             return true;
         }
-        public bool writeUniformDampingToJoints(float _damping)
+        public bool WriteUniformDampingToJoints(float _damping)
         {
             for(int i=1;i<tooldrive_start_index;i+=1)
             {
@@ -675,16 +702,16 @@ namespace SSL{
             }
             return true;
         }
-        public bool writeDampingToSingleJoint(string jointName, float stiffness)
+        public bool WriteDampingToSingleJoint(string jointName, float stiffness)
         {
             return true;
         }
-        public bool writeDampingToSingleJoint(int jointIndex, float stiffness)
+        public bool WriteDampingToSingleJoint(int jointIndex, float stiffness)
         {
             return true;
         }
 
-        public bool writeForceLimitsToJoints(float[] _forces)
+        public bool WriteForceLimitsToJoints(float[] _forces)
         {
             for(int i=1;i<tooldrive_start_index;i+=1)
             {
@@ -694,7 +721,7 @@ namespace SSL{
             }
             return true;
         }
-        public bool writeUniformForceLimitsToJoints(float _force)
+        public bool WriteUniformForceLimitsToJoints(float _force)
         {
             for(int i=1;i<tooldrive_start_index;i+=1)
             {
@@ -704,31 +731,31 @@ namespace SSL{
             }
             return true;
         }
-        public bool writeForLimitToSingleJoint(string jointName, float stiffness)
+        public bool WriteForLimitToSingleJoint(string jointName, float stiffness)
         {
             return true;
         }
-        public bool writeForceLimitToSingleJoint(int jointIndex, float stiffness)
+        public bool WriteForceLimitToSingleJoint(int jointIndex, float stiffness)
         {
             return true;
         }
 
-        public bool useGravityOnEntire_robot(bool on_off_flag)
+        public bool UseGravityOnEntire_robot(bool on_off_flag)
         {
             return true;
         }
         
-        public bool useMeshCollidersOnEntire_robot(bool on_off_flag)
+        public bool UseMeshCollidersOnEntire_robot(bool on_off_flag)
         {
             return true;
         }
 
-        public bool setGravityStatusOnJoint(string jointName, bool on_off_flag)
+        public bool SetGravityStatusOnJoint(string jointName, bool on_off_flag)
         {
             return true;
         }
 
-        public bool setMeshColliderStatusOnJoint(string jointName, bool on_off_flag)
+        public bool SetMeshColliderStatusOnJoint(string jointName, bool on_off_flag)
         {
             return true;
         }

@@ -35,8 +35,8 @@ public class SslHandController : MonoBehaviour
             GetController();
             return;
         }
-        hand.SetGrip(GetGripPress());
-        hand.SetTrigger(GetTriggerPress());
+        hand.SetGrip(GetGripValue());
+        hand.SetTrigger(GetTriggerValue());
     }
 
     
@@ -97,7 +97,7 @@ public class SslHandController : MonoBehaviour
         return this.transform.position;
     }
 
-    public float GetTriggerPress()
+    public float GetTriggerValue()
     {
         float triggerValue;
         if(currentDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.trigger, out triggerValue))
@@ -107,7 +107,7 @@ public class SslHandController : MonoBehaviour
         return 0f;
     }
 
-    public float GetGripPress()
+    public float GetGripValue()
     {
         float gripValue;
         if(currentDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.grip, out gripValue))
@@ -117,5 +117,37 @@ public class SslHandController : MonoBehaviour
         return 0f;
     }
 
-    public float GetPrimary
+    public Vector2 GetPrimaryJoystickValue()
+    {
+        Vector2 axes;
+        if (currentDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out axes))
+        {
+            return axes;
+        }
+        return new Vector2(0,0);
+    }
+
+    public bool GetPrimaryButtonPress()
+    {
+        bool buttonValue;
+        return (currentDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out buttonValue) && buttonValue);
+    }
+
+    public bool GetSecondaryButtonPress()
+    {
+        bool buttonValue;
+        return (currentDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.secondaryButton, out buttonValue) && buttonValue);
+    }
+
+    public bool GetTriggerPress()
+    {
+        bool triggerValue;
+        return (currentDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out triggerValue) && triggerValue);
+    }
+
+    public bool GetGripPress()
+    {
+        bool gripValue;
+        return (currentDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.gripButton, out gripValue) && gripValue);
+    }
 }
