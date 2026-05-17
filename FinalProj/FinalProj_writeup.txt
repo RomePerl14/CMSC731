@@ -1,8 +1,10 @@
-Website: https://terpconnect.umd.edu/~romeperl/pages/development_of_mits.html
-Presentations
+Website: 
+https://terpconnect.umd.edu/~romeperl/pages/development_of_mits.html
 
-Presentation: https://docs.google.com/presentation/d/1wnVwsewZptVc61APMiV7Pq-s1Am0IXoCEE0MnH264mo/edit?usp=sharing
+Presentation: 
+https://docs.google.com/presentation/d/1wnVwsewZptVc61APMiV7Pq-s1Am0IXoCEE0MnH264mo/edit?usp=sharing
 
-GitHub: https://github.com/RomePerl14/CMSC731
+GitHub: 
+https://github.com/RomePerl14/CMSC731
 
 GitHub has been made public, though TAs have access to it still
