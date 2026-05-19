@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Maryland Immersive Telepresence System - Development Progress</title>
+</head>
+<meta name="Errrmmmm exoskeletons are cool??">
+
+<h3 id="-development-of-the-extended-reality-xr-interface-for-"><em>Development of the Extended Reality (XR) Interface For</em></h3>
+<h1 id="-mits-maryland-immersive-telepresence-system-"><strong>MITS: Maryland Immersive Telepresence System</strong></h1>
+<p>Final Project Report for CMSC731 - Advances in XR</p>
+<h2 id="final-presentation">FINAL PRESENTATION</h2>
+<p>You can find the final presentation here:
+<a href="https://docs.google.com/presentation/d/1wnVwsewZptVc61APMiV7Pq-s1Am0IXoCEE0MnH264mo/edit?usp=sharing">https://docs.google.com/presentation/d/1wnVwsewZptVc61APMiV7Pq-s1Am0IXoCEE0MnH264mo/edit?usp=sharing</a></p>
+<h2 id="4-30-progress-report">4/30 PROGRESS REPORT</h2>
+<p>You can find the 4/30 progress report here:
+<a href="https://docs.google.com/presentation/d/1GbH34nYDGVq1rYPkOViydhGDx8m5ceYtm0VdYqQMS0Y/edit?usp=sharing">https://docs.google.com/presentation/d/1GbH34nYDGVq1rYPkOViydhGDx8m5ceYtm0VdYqQMS0Y/edit?usp=sharing</a></p>
+<h2 id="github-repo">Github Repo</h2>
+<p>You can find the relevant Github Repo with the source code here:
+<a href="https://github.com/RomePerl14/CMSC731">https://github.com/RomePerl14/CMSC731</a></p>
+<h2 id="overview">OVERVIEW</h2>
+<p>This webpage contains the details of my final project submission for CMSC731 - Advances in XR, where I worked on developing the extended reality interface portion MITS. There are three main features that were investigated and developed during the course of this final project:</p>
+<ul>
+<li><em>Controlling simulated robots using the Maryland-Georgetown-Army Exoskeleton (MGAXOS)</em></li>
+<li><em>Simulating robots in Unity and interacting with them physically</em></li>
+<li><em>Being able to command and collect joint telemetry from simulated robots</em></li>
+</ul>
+<p>All of this had to also be integrated within an extended reality application, and couldn&#39;t just be a 3D development environment. This required me to relearn all of Unity&#39;s XR Interaction Toolkit (as it has changed drastically since 2022) and figure out how to best communicate with the robot structures provided by the Unity Robotics hub. While I had worked with the Unity Robotics hub in the past, I was never able to dig deep and look into the underlying structure and functionality that it provided, so this was a great change for me to do that. While I did not get as much as I would have liked done, I not only learned a lot about Unity and the XR Interaction Toolkit, but I for the first time I was able to sample what a full MITS concept should be like - XR and exoskeleton interaction. The work done for this project provides a very promising headstart for future development of MITS and XR robot interaction.</p>
+<h2 id="demo-videos-">DEMO VIDEOS:</h2>
+<h3 id="commanding-a-virtual-robot-with-mits-direct-mapping-">COMMANDING A VIRTUAL ROBOT WITH MITS [DIRECT MAPPING]</h3>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/gYDaVtuCVa0?si=7lUpatdBVAKn3Uca" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<h3 id="commanding-a-virtual-robot-with-mits-delta-commands-">COMMANDING A VIRTUAL ROBOT WITH MITS [DELTA COMMANDS]</h3>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0H674Lqk_BY?si=VevjEPLlCm3ujYAd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<h3 id="generating-trajectories-using-vr-interaction">GENERATING TRAJECTORIES USING VR INTERACTION</h3>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/z0G3piYmYuw?si=J7G9rsrq7CzbfCqI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<h3 id="robot-freakout-common-issue-when-using-unity-ik-and-inv-dyn-solvers-">ROBOT FREAKOUT [Common Issue when using Unity IK and Inv Dyn solvers]</h3>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/23y1Pqes5Dg?si=a9lSi7xfRH8CVGXk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<h2 id="project-dependencies">Project Dependencies</h2>
+<p>To run any of the scenes in this project, you must install the following packages:</p>
+<ul>
+<li>Pacakges provided directly by Unity:<ul>
+<li>XR Interaction Toolkit</li>
+<li>XR Plugin Management</li>
+<li>Universal Render Pipeline</li>
+<li>XR Core Utilities (probably, might be unused)</li>
+<li>OpenXR Plugin</li>
+</ul>
+</li>
+<li>Packages which are provided by Unity but must be acquired via Git:<ul>
+<li>Unity Robotics Hub ROS-TCP-Connector: <a href="https://github.com/Unity-Technologies/ROS-TCP-Connector.git?path=/com.unity.robotics.ros-tcp-connector">https://github.com/Unity-Technologies/ROS-TCP-Connector.git?path=/com.unity.robotics.ros-tcp-connector</a></li>
+<li>Unity Robotics Hub Visualization Tools: <a href="https://github.com/Unity-Technologies/ROS-TCP-Connector.git?path=/com.unity.robotics.visualizations">https://github.com/Unity-Technologies/ROS-TCP-Connector.git?path=/com.unity.robotics.visualizations</a></li>
+<li>Unity Robotics Hub ROS-TCP-Endpoint: <a href="https://github.com/Unity-Technologies/ROS-TCP-Endpoint.git">https://github.com/Unity-Technologies/ROS-TCP-Endpoint.git</a></li>
+<li>Unity Robotics Hub URDF Importer: <a href="https://github.com/Unity-Technologies/URDF-Importer.git?path=/com.unity.robotics.urdf-importer">https://github.com/Unity-Technologies/URDF-Importer.git?path=/com.unity.robotics.urdf-importer</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="affiliation-statement">Affiliation Statement</h2>
+<p>Much of this project is affiliated with my work at the University of Maryland Space Systems Laboratory (UMD SSL). However, this project does not use SSL generated code, it&#39;s actually the opposite. Much of the code has labels bearing SSL; this is because I wanted to use the work from this project <em>in the future</em> (actually this upcoming summer) to continue working on MITS, and rather than having to sort through a bunch of resources, all of the code written for this project was written with the intent of using it to continue MITS development at the SSL, and seemless integrate with the SSL&#39;s core robot software stack. MonoBehavior Scripts (as well as some custom libraries) were all written for MTIS and are intended to continued to be used after this final project!!</p>
+<p>That being said, there are several assets which come directly from prior SSL development. Mainly, the robot models and Universal Robot Description Format (URDF) files, which are used by the Unity Robotics hub URDF important to autonomatically generate ArticulationBody trees, are from prior SSL work. However, I did write the URDF files, I just didn&#39;t make the CAD :P (and thanks to those who did, Nic and Charlie (For DymaFlight, the manipulator) And Stephen Rodrick and Thomas Something and the vast number of people who worked on MGAXOS!).</p>
+<h2 id="project-structure">Project Structure</h2>
+<p>Within the <em>Assets</em> folder, you&#39;ll find the following structure:</p>
+<ul>
+<li>Materials</li>
+<li>Prefabs</li>
+<li>Scenes</li>
+<li>Scripts</li>
+<li>Ssl Messages</li>
+<li>Ssl Robots</li>
+<li>Ssl Robots Prefabs</li>
+</ul>
+<p><strong>ANY OTHER FOLDERS ARE GENERATED BY PACKAGES, AND WERE NOT DIRECTLY MADE BY ME!</strong></p>
+<h3 id="materials">Materials</h3>
+<p>This folder is pretty standard, it contains the material objects for the materials used in the project, nice and neatly organized (and labeled!).</p>
+<h3 id="prefabs">Prefabs</h3>
+<p>This contains both custom prefabs and downloaded prefabs, but in general any Prefab used by the project should be stored in here, UNLESS it is a robot prefab (see below). By prefabs, I mean the entire shebang of stuff you might get when downloading a model - for instance, the <code>Oculus Hands</code> folder contains animations, the models of the hands, the prefabs themselves, etc etc. If a model is downloaded from the internet, whatever it comes with is neatly stored in this folder.</p>
+<h4 id="astronaut-hands">Astronaut hands</h4>
+<p>A brief mention of the astornaut hands prefab as I am very proud of my work on animating them. I ALSO successfully applied the provided normal map to their texture, which really made them pop (I&#39;m sure a very trival thing but I am proud of myself nonetheless)! A small detail you may or may not notice is that the astronaut &quot;close&quot; animation does not form a fist like normal close or fist animations do. This is because astronauts <em>struggle</em> to fully close their hands while wearing spacesuit gloves, as there is typically no dedicated metacarpophalangeal joint (knuckles) in spacesuit gloves. See the image below:</p>
+<p><img src="images/mits_images/image.png" alt="" width="350"/> <img src="images/mits_images/image-1.png" alt="" width="350"/></p>
+<p><img src="images/mits_images/image-2.png" alt="" width="350"/></p>
+<h3 id="scenes">Scenes</h3>
+<p>This folder contains seperate scenes for organizing demos - there is one scene for demo-ing the MGAXOS control, and one scene to demonstrate trajectory generation, and another scene that is kinda empty... it was meant for physically driving the robot by interacting with it.</p>
+<h3 id="scripts">Scripts</h3>
+<p>This folder is dense - it contains all the scripts used (and some unused) by the project. This project contains all of the scripts made for HWs 1-4, so some of them are unused as I defaulted to the XR Interaction Toolkit provided plugins.</p>
+<ul>
+<li>ssl_scripts &lt;-- contains 3D, non-XR dependent scripts<ul>
+<li>locomotion &lt;-- contains 3D locomotion scripts</li>
+<li>object_behavior &lt;-- contains scripts that modify object behavior</li>
+<li>physical_buttons &lt;-- contains scripts used for physical buttons (like from HW2)</li>
+<li>ssl_articulationbody_interface &lt;-- the meatiest folder, contains the two major classes that allow us to communicate with simulated robots seemlessly</li>
+<li>ssl_common_types &lt;-- contains commonly used data structures and variables, and stuff</li>
+<li>ssl_controllers &lt;-- contains control scripts, mainly for simulated robots (they read/write and perform actions on simulated robots)</li>
+</ul>
+</li>
+<li>ssl_xr_scripts &lt;-- contain XR dependent scripts<ul>
+<li>ssl_interactions &lt;-- scripts used for XR interactions</li>
+<li>ssl_locomotion &lt;-- scripts used for XR locomotion, written by muah (for HW4)</li>
+<li>ssl_tests &lt;-- test folder for temp scripts</li>
+<li>ssl_xr_hand_control &lt;-- contain scripts that revolve XR hand control, such as getting inputs, animating movements, etc</li>
+<li>ssl_xr_managers &lt;-- scripts that act as managers between several components in a XR scene, like the hands, robots, UI elements, etc</li>
+</ul>
+</li>
+</ul>
+<h3 id="ssl-messages">Ssl Messages</h3>
+<p>This folder has the Unity-Robotics-Hub-Generated data structures that convert ROS/ROS 2 based messages and services into an object usable by Unity. While the Unity Robotics Hub provides ROS/ROS2 based messages/services out-of-the-box, this folder specifically contains any SSL written messages/services to allow us to more seamlessly interact with the robot control software.</p>
+<h3 id="ssl-robots">Ssl Robots</h3>
+<p>This folder contains the URDF and .obj meshes for several SSL robots (all designed for space applications), as well as some end-effectors that I made previously.</p>
+<h3 id="ssl-robots-prefabs">Ssl Robots Prefabs</h3>
+<p>Because you need to re-generate a simulated robot every time you open a new scene, or forget to copy the GameObject, or make a new project, it can become annoying. As well, there are initial tweaks that must happen on first generation (the first link, the base, is missing an articulationbody always, so you must manually add one, and you must delete the extra scripts provided upon generation). This folder contains prefabs that have already been conditioned for SSL (and this project&#39;s) use cases.</p>
+<h1 id="project-usage">PROJECT USAGE</h1>
+<p>Running the demos in the project is straight forward, in the sense that you should be able to download the git repository and open up the project without needing to do anything additional. With that being said, this section will go over several critical scripts and their usage during runtime</p>
+<h2 id="common-usage-scripts-components">COMMON USAGE SCRIPTS/COMPONENTS</h2>
+<p>This section will cover scripts/components that are used in both the teleoperation demo, and the trajectory generation demo! Details about specific components for each demo will be discussed in their own section (see below).</p>
+<h3 id="ssl-xr-origin-vr-">SSL XR Origin (VR)</h3>
+<p>This prefab is an extension of the generic Unity XR Origin, that incorporates locomotion and hand tracking. The unique components are shown in the below GameObject Tree:</p>
+<p><img src="images/mits_images/image-8.png" alt="alt text"></p>
+<p>There are two components on the parent GameObject of <code>SSL XR Origin (VR)</code> that are shared between each demo:</p>
+<ul>
+<li>XR Origin (<em>FROM UNITY</em>) - The origin of the XR Controller, parent frame of the headset and controllers [link: <a href="https://docs.unity3d.com/6000.4/Documentation/Manual/xr-origin.html">https://docs.unity3d.com/6000.4/Documentation/Manual/xr-origin.html</a>]</li>
+<li>Input Action Manager (<em>FROM UNITY</em>) - Manages the inputs and actions of the XR setup: headsets and controllers [link: <a href="https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@3.0/manual/input-action-manager.html">https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@3.0/manual/input-action-manager.html</a>]</li>
+</ul>
+<p>Below is the settings for each component:</p>
+<p><img src="images/mits_images/image-14.png" alt="alt text"></p>
+<h4 id="hand-controller-and-astronaut-hand">Hand Controller and Astronaut Hand</h4>
+<p>The Right Hand Controller and Left Hand Controller are functionally identical, the only difference is that the model for the Right Hand Controller is mirrored to convert it from a left hand model to a right hand model. The <code>Right/Left Hand Controller</code> GameObject has the following:</p>
+<ul>
+<li>Tracked Pose Driver (Input System) (<em>FROM UNITY</em>): gets hand controller position and rotation</li>
+<li>Ssl Hand Controller: Reads controller inputs and manages data distribution</li>
+<li>Near-Far Interactor (<em>FROM UNITY</em>): Manages VR grabing of object, in this case we use the near interactor</li>
+<li>Interaction Attach Controller (<em>FROM UNITY</em>): Manages attachment of interactor an interactable</li>
+<li>Sphere Interaction Caster (<em>FROM UNITY</em>): Manages the spherical radius that triggers an interaction event </li>
+</ul>
+<p>Below are the settings used for each component:</p>
+<p><img src="images/mits_images/image-9.png" alt="" width="300"/> <img src="images/mits_images/image-10.png" alt="" width="300"/> <img src="images/mits_images/image-11.png" alt="" width="300"/> </p>
+<p><img src="images/mits_images/image-12.png" alt="" width="300"/> <img src="images/mits_images/image-13.png" alt="" width="300"/></p>
+<h4 id="locomotion">Locomotion</h4>
+<p>This GameObject manages motion of the XR Rig, and implements components from the XR Interaction Toolkit. While I made locomotion scripts for HW4, I decided to go with the professionals work and use Unity&#39;s instead! The following components are in the <code>Locomotion</code> GameObject:</p>
+<ul>
+<li>XR Body Transformer (<em>FROM UNITY</em>) - Used to transform the XR Origin [link: <a href="https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@3.5/manual/xr-body-transformer.html">https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@3.5/manual/xr-body-transformer.html</a>]</li>
+<li>Locomotion Mediator (<em>FROM UNITY</em>) - Helps manage locomotion behavior [link: <a href="https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@3.5/manual/locomotion-mediator.html">https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@3.5/manual/locomotion-mediator.html</a>]</li>
+<li>Continous Move Provider (<em>FROM UNITY</em>) - Allows for continuous move of the player based on controller inputs [link: <a href="https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@3.5/manual/continuous-move-provider.html?q=Continous%20Move%20Prov">https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@3.5/manual/continuous-move-provider.html?q=Continous%20Move%20Prov</a>]</li>
+<li>Continous Turn Provider (<em>FROM UNITY</em>) - Allows for continuous turning of the player based on controller inputs [link: <a href="https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@3.5/manual/continuous-turn-provider.html?q=Continuous%20Turn">https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@3.5/manual/continuous-turn-provider.html?q=Continuous%20Turn</a>]</li>
+</ul>
+<p>Below are the settings used for each component:</p>
+<p><img src="images/mits_images/image-15.png" alt="alt text"></p>
+<h2 id="vr-teleoperation-demo">VR TELEOPERATION DEMO</h2>
+<p>This demo can be found in the <strong>ExosDirectControl</strong> scene, in the <strong>Scenes/</strong> folder. This demo allows the user to drive a simulated, 7 degree-of-freedom manipulator (DymaFlight) with MGAXOS, as well as explore the environment. The idea behind the scene is that utilizing VR, you can simulate the workspace and place the user in a location that best enables telepresence (i.e. the dexterous robot arms to the left and right of the user, where their left and right arms would be, or where a pair of stereo cameras might be), while also allowing the user to explore the workspace in a free-flying mode to evaulate there motions, the objects in play, and best decide what moves to make, without need additional cameras. Most of the environment has not been implemented yet but ideally an dexterous servicing or assembly task could be attempted by a user in VR to gauge the performance benefits of training/operating in such an environment. Below, you&#39;ll find details about script usage if there is ever a desire to mess around with the functionality</p>
+<h3 id="ssl-xr-origin-vr-">SSL XR ORIGIN (VR)</h3>
+<p>This prefab is in more detail above, however this script contains an additional component that needs discussion. The <code>Exos Direct Teleop Manager</code> manages the teleoperation demo that utilizes the hardware data from the exoskeleton to contorl a virtual manipulator. It also manages the environmental features of the scene, like the heads-up-display and what controller buttons do. There are also three TextMeshPro GameObjects attached to the <code>Main Camera</code> GameObject that act as a heads-up-display (HUD).</p>
+<h4 id="exos-direct-teleop-manager">Exos Direct Teleop Manager</h4>
+<p>This component has several public members that need to be populated before running the demo:</p>
+<ul>
+<li><code>Pos_controller</code> - the position controller script for dymaflight <code>Dyam Joint Position Controller</code>, or a similar version for a different manipulator. This public script is only accessed to enable/disable motion (halt or unhalt the motion) based on a trigger value</li>
+<li><code>dyma_spot</code> (NOT WORKING) - this is the transform position and rotation of where to teleport the player when controlling dymaflight, to proivde the best telepresence (i.e., you want the simulated robot arm to roughly alighn with your own arm)</li>
+<li><code>free_flying_spot</code> - this is the transfrom position and rotation you teleport to when not controlling the dymaflight, allowing you to freely maneuver throughout the world.</li>
+<li><code>SSL XR Origin</code> - this is a reference to the transform of the SSL XR ORIGIN, so that it can change the user&#39;s transform (teleport them) programatically</li>
+<li><code>Locomotion</code> Transform: this is a reference to the locomotion GameObject, which contains the different XR locomotion methods used in the demo. The script uses this reference to turn the entire GameObject off/on if the user is teleoperating/exploring, respectively</li>
+<li><code>Right_hand</code> - this is a reference to the right hand GameObject visual element (the glove GameObject, not the parent Right Hand Controller Object). The script turns the GameObject off (hides the visual) when teleoperating as to not disturb the immersion by showing two hands</li>
+<li><code>Robot</code> - this is a reference to the simulated robot GameObject, the ArticulationBody chain. This script controls the end-effector opening and closing based on a controller input (pressing the grip).</li>
+<li><code>Hand_controller_left</code>/<code>Hand_controller_right</code> - These are references to the left and right <code>SslHandController</code> scripts, and are used to get controller inputs (like button presses and joystick values). </li>
+<li><code>Title_text</code> - TextMeshPro + Cube for the current control mode enabled - either <code>In Control</code> or <code>Investigation Mode</code>, with <code>In Control</code> representing direct teleoperation, and <code>Investigation Mode</code> representing exploration of the workspace to see what your next move might be </li>
+<li><code>Control_state</code> - TextMeshPro + Cube for that describes if robot motion is enabled or disabled</li>
+<li><code>Tool_drive_state</code> - TextMeshPro + Cube that describes if the tool drive is open or closed</li>
+<li><code>Robot_name</code> - an enum that is used to identify which robot is being simulated, so that (if desired) it can have a starting position set to it on program start</li>
+</ul>
+<h3 id="how-to-use-this-script">How To Use This Script</h3>
+<p>The way the script works is the following:</p>
+<ul>
+<li>At startup, you are set in <code>Investigation Mode</code> where you can explore the environment. You would then press the <code>primary button</code> on the right controller to switch to <code>In Control</code> mode, which would teleport you to a good coordinate to line up the simulated manipulators arm with yours. Once in <code>In Control</code> mode, pressing the trigger will enable motion, and have the robot start tracking. If you let go of the trigger, the robot stops tracking you. If depress the trigger, move, and then repress the trigger, the simulated robot will jump to match your current end-effector pose from whatever pose it was at. While <code>In Control</code>, pressing the grip will open the end-effector, and releasing it will cloes the end-effector. If you press the <code>primary button</code> on the right controller again, you will be switched back to <code>Investigation Mode,</code> and the process starts again</li>
+</ul>
+<p>Below are the settings for the component:</p>
+<p><img src="images/mits_images/image-16.png" alt="alt text"></p>
+<h2 id="trajectory-generation-demo">TRAJECTORY GENERATION DEMO</h2>
+<p>This demo can be found in the aptly named <strong>TestingScene</strong> scene in the <strong>Scenes/</strong> folder. This demo allows users to save a set of joint waypoints based on the robots current position, and execute them in series, generating a trajectory. The idea behind the scene is to enable the trajectory generation functionality scene in collaborative robots (cobots) where a user physically moves the robot system, captures a waypoint, and then moves the robot to it&#39;s next waypoint, in sequence until the trajectory can be made. By virutalizing this process, a robot operator can accomplish three things: physically interact with a robotic system thats not typically interactable (such as a large space manipulator like the CanadaArm2, or an industrial sized robot), observe what effects a trajectory might have on it&#39;s environent without the labor-intense pre-calculation, and enable the user to quickly generate complex trajectories.</p>
+<h3 id="ssl-xr-origin-vr-">SSL XR ORIGIN (VR)</h3>
+<p>This prefab is in more detail above. There is an additional TextMeshPro GameObject attached to <code>Main Camera</code> that acts as a HUD</p>
+<h4 id="xr-near-far-interactor">XR Near-Far Interactor</h4>
+<h3 id="robot-trajectory-controller">Robot Trajectory Controller</h3>
+<p>This GameObject holds the <code>Ssl Vr Robot Trajectory Manager</code> script, which is the main script that stores and executes robot trajectory</p>
+<h3 id="dymaflight">dymaflight</h3>
+<p>This GameObject is the chain of ArticulationBody&#39;s that make up a simulated robot - in this case, the DymaFlight space manipulator being developed by the UMD SSL. There is </p>
+<h4 id="ssl-vr-robot-trajectory-manager">Ssl Vr Robot Trajectory Manager</h4>
+<p>This script controls all of the functions of this demo, including the trajectory generation, HUD modification, and acting on controller inputs. It has several public members that need to be provided beforehand:</p>
+<ul>
+<li><code>robot</code>: the simulated robot, a chain of ArticulationBody&#39;s</li>
+<li><code>Hand_controller_left</code>/<code>Hand_controller_right</code>: The reference to the <code>SslHandController</code> script, for reading inputs from the hand controllers</li>
+<li><code>Text_mesh</code>: the reference to the <code>TextMeshPro</code> GameObject that is used in the HUD</li>
+<li><code>Robot_name</code>: the name of the robot, for setting the home position</li>
+</ul>
+<h3 id="how-to-use-this-script">How to Use This Script</h3>
+<p>To use this script, you can </p>
+<h1 id="tutorials-setup">TUTORIALS / SETUP</h1>
+<p>Some basic tutorials, based on what I&#39;ve learned from this class!</p>
+<h2 id="vr-scene-setup">VR Scene Setup</h2>
+<p>TODO, eventually</p>
+<h2 id="rig-animation-overview">Rig Animation Overview</h2>
+<p>TODO, eventually</p>
+<h2 id="screenshots">Screenshots</h2>
+<p><img src="images/mits_images/image-3.png" alt="" width="350"/></p>
+<p><img src="images/mits_images/image-4.png" alt="" width="350"/></p>
+<p><img src="images/mits_images/image-5.png" alt="" width="350"/> </p>
+<p><img src="images/mits_images/image-6.png" alt="" width="350"/></p>
+<p><img src="images/mits_images/image-7.png" alt="" width="350"/></p>
+
